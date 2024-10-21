@@ -57,3 +57,7 @@ async function getInitialState() {
 }
 
 ```
+
+## 把 husky 去掉
+
+git commit --no-verify -m
