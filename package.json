@@ -1,0 +1,34 @@
+{
+  "private": true,
+  "author": "BM-laoli <18376621755@163.com>",
+  "scripts": {
+    "build": "max build",
+    "dev": "max dev",
+    "format": "prettier --cache --write .",
+    "postinstall": "max setup",
+    "prepare": "husky",
+    "setup": "max setup",
+    "start": "npm run dev"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.0.1",
+    "@ant-design/pro-components": "^2.4.4",
+    "@tiptap/react": "^2.8.0",
+    "@tiptap/starter-kit": "^2.8.0",
+    "@umijs/max": "^4.3.20",
+    "ahooks": "^3.8.1",
+    "antd": "^5.20.6",
+    "mockjs": "^1.1.0"
+  },
+  "devDependencies": {
+    "@types/mockjs": "^1.0.10",
+    "@types/react": "^18.0.33",
+    "@types/react-dom": "^18.0.11",
+    "husky": "^9",
+    "lint-staged": "^13.2.0",
+    "prettier": "^2.8.7",
+    "prettier-plugin-organize-imports": "^3.2.2",
+    "prettier-plugin-packagejson": "^2.4.3",
+    "typescript": "^5.0.3"
+  }
+}
