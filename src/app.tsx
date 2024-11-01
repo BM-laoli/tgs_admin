@@ -6,8 +6,8 @@ import { message } from 'antd';
 import { USER_INFO_KEY } from './constants';
 
 async function getInitialState() {
-  const userInfo = JSON.parse(localStorage.getItem(USER_INFO_KEY) || '');
-  if (!userInfo) {
+  const userInfo = JSON.parse(localStorage.getItem(USER_INFO_KEY) || '{}');
+  if (!userInfo.token) {
     history.push('/login');
     return;
   }
@@ -92,11 +92,14 @@ const fetchMenuData = () => {
 enum ErrorShowType {
   AUTH_FAIL = 401,
 }
+
 // 运行时配置
 const request: RequestConfig = {
+  baseURL:'http://localhost:5102',
   timeout: 5000,
   errorConfig: {
     errorHandler(res: any) {
+      console.log('----> error',res)
       const { success, data, message: messageText, code } = res;
       if (!success) {
         //res.response?.data  是service 定义的
@@ -117,6 +120,8 @@ const request: RequestConfig = {
   // 请求拦截器
   requestInterceptors: [
     (config: any) => {
+      console.log('----> requestInterceptors', config)
+
       // 拦截请求配置，进行个性化处理。
       const userInfo = JSON.parse(
         localStorage.getItem(USER_INFO_KEY) || '{}',
@@ -126,7 +131,7 @@ const request: RequestConfig = {
         ...config,
         headers: {
           ...config.headers,
-          token: userInfo?.authInfo?.token,
+          Authorization: userInfo?.token,
         },
       };
     },

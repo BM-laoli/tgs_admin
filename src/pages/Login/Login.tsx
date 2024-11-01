@@ -10,13 +10,17 @@ const LoginForm: FC = () => {
   const [form] = Form.useForm();
 
   const onLogin = async () => {
-    const loginInfo = await userLogin(1);
-    if (!loginInfo.success) {
-      message.error(loginInfo.message || '系统异常! 请稍后再试');
-      return;
+    try {
+      const value = await form.getFieldsValue();
+      const { token, userInfo } = await userLogin({
+        phone: value.phone,
+        password: value.password,
+      });
+      localStorage.setItem(USER_INFO_KEY, JSON.stringify({ token, userInfo }));
+      history.replace('/');
+    } catch (error) {
+      message.error('系统异常! 请稍后再试');
     }
-    localStorage.setItem(USER_INFO_KEY, JSON.stringify(loginInfo?.data));
-    history.replace('/');
   };
 
   return (
@@ -32,8 +36,8 @@ const LoginForm: FC = () => {
         onFinish={onLogin}
       >
         <Form.Item
-          name="username"
-          rules={[{ required: true, message: '请输入用户名' }]}
+          name="phone"
+          rules={[{ required: true, message: '请输入手机号' }]}
         >
           <Input placeholder="用户名" prefix={<UserOutlined />} size="large" />
         </Form.Item>
